@@ -1,8 +1,7 @@
-
 import 'package:flutter/material.dart';
+import 'package:mobile/widgets/skeleton.dart';
 
 class HomePage extends StatefulWidget {
-
   static get route => MaterialPageRoute(builder: (_) => HomePage());
 
   @override
@@ -11,16 +10,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: AppBar(
-        title: Text("Settings"),
-      ),
-      appBar: AppBar(
-        title: Text("Saavn Pru"),
-      ),
-      body: Container(
-        child: Text("RED 23"),
-      ),
+    return Skeleton(
+      child: Text("RED"),
     );
   }
 }
