@@ -7,10 +7,10 @@ import 'package:mobile/services/http_service.dart';
 import 'package:mobile/state/main.dart';
 import 'package:provider/provider.dart';
 
-class SongSearchListItem extends StatelessWidget {
+class FavoriteListItem extends StatelessWidget {
   final SongFromSearch song;
 
-  SongSearchListItem(this.song);
+  FavoriteListItem(this.song);
 
   @override
   Widget build(BuildContext context) {
@@ -42,20 +42,21 @@ class SongSearchListItem extends StatelessWidget {
       subtitle: Text(song.album),
       trailing: IconButton(
         icon: Icon(Icons.favorite),
+        color: Colors.red,
         onPressed: () {
           // Save the song
           Scaffold.of(context).showSnackBar(SnackBar(
-            content: Text("Added as favorite!"),
+            content: Text("Removed from favorite!"),
           ));
 
           Provider.of<MainState>(context, listen: false)
-              .addSongToFavorite(song);
+              .removeSongFromFavorite(song);
         },
       ),
     );
   }
 
   static List<Widget> fromList(List<SongFromSearch> songs) {
-    return songs.map((e) => SongSearchListItem(e)).toList();
+    return songs.map((e) => FavoriteListItem(e)).toList();
   }
 }

@@ -9,7 +9,7 @@ import 'package:mobile/services/http_service.dart';
 class MainState extends ChangeNotifier {
   final http = GetIt.instance<HttpService>();
 
-  List songList;
+  List<SongFromSearch> songList = [];
   SongDetail nowPlaying;
   AudioPlayer player = AudioPlayer();
   bool isPlaying = false;
@@ -34,7 +34,7 @@ class MainState extends ChangeNotifier {
   }
 
   clearSearch() {
-    if(searchResults.length > 0) {
+    if (searchResults.length > 0) {
       searchResults = [];
       notifyListeners();
     }
@@ -57,5 +57,20 @@ class MainState extends ChangeNotifier {
     isPlaying = false;
     notifyListeners();
     player.pause();
+  }
+
+  addSongToFavorite(SongFromSearch song) {
+    // check if already there
+    if (!songList.contains(song)) {
+      songList.add(song);
+      // add to localstorage too
+      notifyListeners();
+    }
+  }
+
+  removeSongFromFavorite(SongFromSearch song) {
+    if (songList.remove(song)) {
+      notifyListeners();
+    }
   }
 }

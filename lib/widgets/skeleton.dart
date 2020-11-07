@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/widgets/media_player.dart';
+import 'package:mobile/widgets/search_bar.dart';
 import 'package:mobile/widgets/sidebar.dart';
 
 class Skeleton extends StatelessWidget {
@@ -17,6 +18,7 @@ class Skeleton extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
+            SearchBar(),
             // Rest of the body
             Expanded(
               child: SingleChildScrollView(
