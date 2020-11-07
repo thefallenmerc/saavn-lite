@@ -17,8 +17,6 @@ class _MediaPlayerState extends State<MediaPlayer> {
     return Consumer<MainState>(builder: (context, state, child) {
       final SongDetail song = state.nowPlaying;
 
-      print("--------");
-
       return Container(
         decoration: BoxDecoration(
           boxShadow: [

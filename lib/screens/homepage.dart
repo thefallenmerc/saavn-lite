@@ -4,6 +4,7 @@ import 'package:mobile/helpers/shared_preference.dart';
 import 'package:mobile/models/song_from_search.dart';
 import 'package:mobile/services/http_service.dart';
 import 'package:mobile/state/main.dart';
+import 'package:mobile/widgets/search_bar.dart';
 import 'package:mobile/widgets/skeleton.dart';
 import 'package:mobile/widgets/song_search_list_item.dart';
 import 'package:provider/provider.dart';
@@ -45,7 +46,7 @@ class _HomePageState extends State<HomePage> {
         return Skeleton(
           child: Column(
             children: [
-              buildSearchBar(context),
+              SearchBar(),
               Column(
                 children: SongSearchListItem.fromList(state.searchResults),
               ),
@@ -53,45 +54,6 @@ class _HomePageState extends State<HomePage> {
           ),
         );
       },
-    );
-  }
-
-  /// Build Seach bar
-  Container buildSearchBar(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(left: 18),
-      width: MediaQuery.of(context).size.width,
-      child: Form(
-        key: _formKey,
-        child: Row(
-          children: [
-            Expanded(
-              child: TextFormField(
-                autocorrect: false,
-                controller: searchController,
-                decoration: InputDecoration(
-                  hintText: "Search",
-                  border: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                  errorBorder: InputBorder.none,
-                  disabledBorder: InputBorder.none,
-                ),
-              ),
-            ),
-            IconButton(
-              icon: Icon(Icons.search),
-              onPressed: () {
-                var query = searchController.text;
-                if (query.length > 0) {
-                  Provider.of<MainState>(context, listen: false)
-                      .searchSongs(query);
-                }
-              },
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

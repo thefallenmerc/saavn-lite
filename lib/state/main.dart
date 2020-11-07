@@ -13,17 +13,30 @@ class MainState extends ChangeNotifier {
   SongDetail nowPlaying;
   AudioPlayer player = AudioPlayer();
   bool isPlaying = false;
+  bool isSearching = false;
   List<SongFromSearch> searchResults = [];
 
   // modifiers
   Future searchSongs(String query) async {
     try {
+      isSearching = true;
+      notifyListeners();
       List<SongFromSearch> results = await http.search(query);
       searchResults = results;
+      isSearching = false;
       notifyListeners();
       return true;
     } catch (error) {
+      isSearching = false;
+      notifyListeners();
       throw error;
+    }
+  }
+
+  clearSearch() {
+    if(searchResults.length > 0) {
+      searchResults = [];
+      notifyListeners();
     }
   }
 
