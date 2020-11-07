@@ -38,7 +38,8 @@ class AppTheme {
       );
 
   static ThemeData get darkTheme => ThemeData.dark().copyWith(
-    accentColor: ThemeColorsDark.accentColor
+    accentColor: ThemeColorsDark.accentColor,
+    primaryColor: ThemeColorsDark.primaryColor
   );
 
   static BoxDecoration outline(context) => BoxDecoration(

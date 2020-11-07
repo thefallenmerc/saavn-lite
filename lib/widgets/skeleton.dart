@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/widgets/media_player.dart';
 import 'package:mobile/widgets/sidebar.dart';
 
 class Skeleton extends StatelessWidget {
@@ -8,15 +9,26 @@ class Skeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        drawer: Sidebar("Saavn Pru"),
-        appBar: AppBar(
-          title: Text("Saavn Pru"),
-        ),
-        body: Container(
-          padding: EdgeInsets.all(20),
-          child: this.child,
+    return Scaffold(
+      /* drawer: Sidebar("Saavn Pru"),
+      appBar: AppBar(
+        title: Text("Saavn Pru"),
+      ), */
+      body: SafeArea(
+        child: Column(
+          children: [
+            // Rest of the body
+            Expanded(
+              child: SingleChildScrollView(
+                child: Container(
+                  child: this.child,
+                  width: MediaQuery.of(context).size.width,
+                ),
+              ),
+            ),
+            // Media Player
+            MediaPlayer()
+          ],
         ),
       ),
     );
