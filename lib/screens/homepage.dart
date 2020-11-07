@@ -3,8 +3,10 @@ import 'package:get_it/get_it.dart';
 import 'package:mobile/helpers/shared_preference.dart';
 import 'package:mobile/models/song_from_search.dart';
 import 'package:mobile/services/http_service.dart';
+import 'package:mobile/state/main.dart';
 import 'package:mobile/widgets/skeleton.dart';
 import 'package:mobile/widgets/song_search_list_item.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   static get route => MaterialPageRoute(builder: (_) => HomePage());
@@ -33,25 +35,24 @@ class _HomePageState extends State<HomePage> {
   final _formKey = GlobalKey<FormState>();
 
   Widget build(BuildContext context) {
-    prefs.getAccessToken().then((value) => {
-          setState(() {
-            token = int.parse(value);
-          })
-        });
-    return Skeleton(
-      child: Column(
-        children: [
-          buildSearchBar(context),
-          Column(
-            children: SongSearchListItem.fromList(searchResults),
+    // prefs.getAccessToken().then((value) => {
+    //       setState(() {
+    //         token = int.parse(value);
+    //       })
+    //     });
+    return Consumer<MainState>(
+      builder: (context, state, child) {
+        return Skeleton(
+          child: Column(
+            children: [
+              buildSearchBar(context),
+              Column(
+                children: SongSearchListItem.fromList(state.searchResults),
+              ),
+            ],
           ),
-          RaisedButton(
-            onPressed: () {},
-            color: Theme.of(context).primaryColor,
-            child: Text("Increase!"),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 
@@ -83,21 +84,8 @@ class _HomePageState extends State<HomePage> {
               onPressed: () {
                 var query = searchController.text;
                 if (query.length > 0) {
-                  setState(() {
-                    isSearching = true;
-                  });
-                  http.search(query).then((results) {
-                    setState(() {
-                      searchResults = results;
-                      isSearching = false;
-                    });
-                  }).catchError((error) {
-                    print(error);
-                    setState(() {
-                      searchResults = [];
-                      isSearching = false;
-                    });
-                  });
+                  Provider.of<MainState>(context, listen: false)
+                      .searchSongs(query);
                 }
               },
             ),
